@@ -50,14 +50,22 @@ export default async function Gallery() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
             {sortedArtworks.map((artwork) => (
-              <Link key={artwork.id} href={`/gallery/${generateSlug(artwork.title)}`} className="block">
-                <div className="w-full h-[560px] relative mx-auto" style={{ maxWidth: "420px" }}>
+              <Link key={artwork.id} href={`/gallery/${generateSlug(artwork.title)}`} className="block group">
+                <div
+                  className="w-full h-[560px] relative mx-auto overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2"
+                  style={{ maxWidth: "420px" }}
+                >
                   <Image
                     src={artwork.image_url || "/placeholder.svg"}
                     alt={artwork.title}
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full transition-transform duration-300 group-hover:translate-y-0">
+                    <h3 className="text-lg font-medium">{artwork.title}</h3>
+                    <p className="text-sm opacity-90">{artwork.techniques}</p>
+                  </div>
                 </div>
               </Link>
             ))}

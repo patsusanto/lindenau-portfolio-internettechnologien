@@ -40,26 +40,36 @@ export default async function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {featuredArtworks.length > 0
             ? featuredArtworks.map((artwork) => (
-                <Link key={artwork.id} href={`/gallery/${generateSlug(artwork.title)}`} className="block">
-                  <div className="w-full h-[560px] relative mx-auto" style={{ maxWidth: "420px" }}>
+                <Link key={artwork.id} href={`/gallery/${generateSlug(artwork.title)}`} className="block group">
+                  <div
+                    className="w-full h-[560px] relative mx-auto overflow-hidden transition-all duration-300 hover:shadow-xl"
+                    style={{ maxWidth: "420px" }}
+                  >
                     <Image
                       src={artwork.image_url || "/placeholder.svg"}
                       alt={artwork.title}
                       fill
-                      className="object-cover"
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
                     />
+                    <div className="absolute inset-0 bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-10" />
                   </div>
                 </Link>
               ))
             : // Fallback placeholders if no artworks are available
               Array.from({ length: 3 }).map((_, index) => (
-                <div key={index} className="w-full h-[560px] relative mx-auto" style={{ maxWidth: "420px" }}>
-                  <Image
-                    src={`/placeholder.svg?height=800&width=600&query=abstract art ${index + 1}`}
-                    alt={`Abstract artwork placeholder ${index + 1}`}
-                    fill
-                    className="object-cover"
-                  />
+                <div key={index} className="group">
+                  <div
+                    className="w-full h-[560px] relative mx-auto overflow-hidden transition-all duration-300 hover:shadow-xl"
+                    style={{ maxWidth: "420px" }}
+                  >
+                    <Image
+                      src={`/placeholder.svg?height=800&width=600&query=abstract art ${index + 1}`}
+                      alt={`Abstract artwork placeholder ${index + 1}`}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-10" />
+                  </div>
                 </div>
               ))}
         </div>

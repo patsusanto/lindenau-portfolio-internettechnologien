@@ -7,7 +7,8 @@ import { useRouter } from "next/navigation"
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { PlusCircle, Edit, Trash2, GripVertical, LogOut } from "lucide-react"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { PlusCircle, Edit, Trash2, GripVertical, LogOut, MoreVertical, Palette, CheckCircle, XCircle } from "lucide-react"
 import { deleteArtworkAction, updatePositionsAction } from "@/app/actions"
 import type { Artwork } from "@/lib/db"
 import { useToast } from "@/components/toast-provider"
@@ -206,7 +207,7 @@ function GalleryAdminContent() {
                 Saving changes...
               </span>
             )}
-            <Button onClick={handleAddArtwork} className="bg-black hover:bg-black/80 flex items-center">
+            <Button onClick={handleAddArtwork} className="bg-black hover:bg-black/80 flex items-center text-white">
               <PlusCircle className="h-4 w-4 mr-2" />
               Add New Artwork
             </Button>
@@ -221,16 +222,34 @@ function GalleryAdminContent() {
           <div className="bg-white p-8 text-center rounded-md shadow">
             <h3 className="text-xl mb-4">No artworks yet</h3>
             <p className="mb-6">Start by adding your first artwork to the gallery.</p>
-            <Button onClick={handleAddArtwork} className="bg-black hover:bg-black/80">
+            <Button onClick={handleAddArtwork} className="bg-black hover:bg-black/80 text-white">
               Add Your First Artwork
             </Button>
           </div>
         ) : (
           <Tabs defaultValue="all" className="w-full" onValueChange={setActiveTab}>
-            <TabsList className="mb-6">
-              <TabsTrigger value="all">All Artworks</TabsTrigger>
-              <TabsTrigger value="available">Available</TabsTrigger>
-              <TabsTrigger value="sold">Sold</TabsTrigger>
+            <TabsList className="mb-6 bg-white border border-gray-200 p-1 rounded-lg shadow-sm">
+              <TabsTrigger 
+                value="all" 
+                className="flex items-center gap-2 px-4 py-2 rounded-md transition-all duration-200 data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:shadow-sm hover:bg-gray-50 data-[state=active]:hover:bg-black"
+              >
+                <Palette className="h-4 w-4" />
+                All Artworks
+              </TabsTrigger>
+              <TabsTrigger 
+                value="available" 
+                className="flex items-center gap-2 px-4 py-2 rounded-md transition-all duration-200 data-[state=active]:bg-green-600 data-[state=active]:text-white data-[state=active]:shadow-sm hover:bg-gray-50 data-[state=active]:hover:bg-green-600"
+              >
+                <CheckCircle className="h-4 w-4" />
+                Available
+              </TabsTrigger>
+              <TabsTrigger 
+                value="sold" 
+                className="flex items-center gap-2 px-4 py-2 rounded-md transition-all duration-200 data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=active]:shadow-sm hover:bg-gray-50 data-[state=active]:hover:bg-red-600"
+              >
+                <XCircle className="h-4 w-4" />
+                Sold
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="all" className="space-y-4">
@@ -245,7 +264,7 @@ function GalleryAdminContent() {
                       >
                         <thead className="bg-gray-50">
                           <tr>
-                            <th width="40" className="px-2 py-3"></th>
+                            <th style={{ width: "40px" }} className="px-2 py-3"></th>
                             <th
                               scope="col"
                               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -323,22 +342,30 @@ function GalleryAdminContent() {
                                     {artwork.position + 1}
                                   </td>
                                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <Button
-                                      variant="ghost"
-                                      size="sm"
-                                      onClick={() => handleEditArtwork(artwork.id)}
-                                      className="text-gray-600 hover:text-gray-900 mr-2"
-                                    >
-                                      <Edit className="h-4 w-4" />
-                                    </Button>
-                                    <Button
-                                      variant="ghost"
-                                      size="sm"
-                                      onClick={() => handleDeleteArtwork(artwork.id)}
-                                      className="text-red-600 hover:text-red-900"
-                                    >
-                                      <Trash2 className="h-4 w-4" />
-                                    </Button>
+                                    <DropdownMenu>
+                                      <DropdownMenuTrigger asChild>
+                                        <Button
+                                          variant="ghost"
+                                          size="sm"
+                                          className="text-gray-600 hover:text-gray-900"
+                                        >
+                                          <MoreVertical className="h-4 w-4" />
+                                        </Button>
+                                      </DropdownMenuTrigger>
+                                      <DropdownMenuContent align="end">
+                                        <DropdownMenuItem onClick={() => handleEditArtwork(artwork.id)}>
+                                          <Edit className="h-4 w-4 mr-2" />
+                                          Edit
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem 
+                                          onClick={() => handleDeleteArtwork(artwork.id)}
+                                          className="text-red-600 focus:text-red-600"
+                                        >
+                                          <Trash2 className="h-4 w-4 mr-2" />
+                                          Delete
+                                        </DropdownMenuItem>
+                                      </DropdownMenuContent>
+                                    </DropdownMenu>
                                   </td>
                                 </tr>
                               )}
@@ -365,7 +392,7 @@ function GalleryAdminContent() {
                       >
                         <thead className="bg-gray-50">
                           <tr>
-                            <th width="40" className="px-2 py-3"></th>
+                            <th style={{ width: "40px" }} className="px-2 py-3"></th>
                             <th
                               scope="col"
                               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -426,22 +453,30 @@ function GalleryAdminContent() {
                                     {artwork.position + 1}
                                   </td>
                                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <Button
-                                      variant="ghost"
-                                      size="sm"
-                                      onClick={() => handleEditArtwork(artwork.id)}
-                                      className="text-gray-600 hover:text-gray-900 mr-2"
-                                    >
-                                      <Edit className="h-4 w-4" />
-                                    </Button>
-                                    <Button
-                                      variant="ghost"
-                                      size="sm"
-                                      onClick={() => handleDeleteArtwork(artwork.id)}
-                                      className="text-red-600 hover:text-red-900"
-                                    >
-                                      <Trash2 className="h-4 w-4" />
-                                    </Button>
+                                    <DropdownMenu>
+                                      <DropdownMenuTrigger asChild>
+                                        <Button
+                                          variant="ghost"
+                                          size="sm"
+                                          className="text-gray-600 hover:text-gray-900"
+                                        >
+                                          <MoreVertical className="h-4 w-4" />
+                                        </Button>
+                                      </DropdownMenuTrigger>
+                                      <DropdownMenuContent align="end">
+                                        <DropdownMenuItem onClick={() => handleEditArtwork(artwork.id)}>
+                                          <Edit className="h-4 w-4 mr-2" />
+                                          Edit
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem 
+                                          onClick={() => handleDeleteArtwork(artwork.id)}
+                                          className="text-red-600 focus:text-red-600"
+                                        >
+                                          <Trash2 className="h-4 w-4 mr-2" />
+                                          Delete
+                                        </DropdownMenuItem>
+                                      </DropdownMenuContent>
+                                    </DropdownMenu>
                                   </td>
                                 </tr>
                               )}
@@ -468,7 +503,7 @@ function GalleryAdminContent() {
                       >
                         <thead className="bg-gray-50">
                           <tr>
-                            <th width="40" className="px-2 py-3"></th>
+                            <th style={{ width: "40px" }} className="px-2 py-3"></th>
                             <th
                               scope="col"
                               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -529,22 +564,30 @@ function GalleryAdminContent() {
                                     {artwork.position + 1}
                                   </td>
                                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <Button
-                                      variant="ghost"
-                                      size="sm"
-                                      onClick={() => handleEditArtwork(artwork.id)}
-                                      className="text-gray-600 hover:text-gray-900 mr-2"
-                                    >
-                                      <Edit className="h-4 w-4" />
-                                    </Button>
-                                    <Button
-                                      variant="ghost"
-                                      size="sm"
-                                      onClick={() => handleDeleteArtwork(artwork.id)}
-                                      className="text-red-600 hover:text-red-900"
-                                    >
-                                      <Trash2 className="h-4 w-4" />
-                                    </Button>
+                                    <DropdownMenu>
+                                      <DropdownMenuTrigger asChild>
+                                        <Button
+                                          variant="ghost"
+                                          size="sm"
+                                          className="text-gray-600 hover:text-gray-900"
+                                        >
+                                          <MoreVertical className="h-4 w-4" />
+                                        </Button>
+                                      </DropdownMenuTrigger>
+                                      <DropdownMenuContent align="end">
+                                        <DropdownMenuItem onClick={() => handleEditArtwork(artwork.id)}>
+                                          <Edit className="h-4 w-4 mr-2" />
+                                          Edit
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem 
+                                          onClick={() => handleDeleteArtwork(artwork.id)}
+                                          className="text-red-600 focus:text-red-600"
+                                        >
+                                          <Trash2 className="h-4 w-4 mr-2" />
+                                          Delete
+                                        </DropdownMenuItem>
+                                      </DropdownMenuContent>
+                                    </DropdownMenu>
                                   </td>
                                 </tr>
                               )}

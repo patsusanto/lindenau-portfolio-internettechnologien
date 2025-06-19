@@ -1,11 +1,11 @@
-@tailwind base;
-@tailwind components;
+@import "tailwindcss";
 @tailwind utilities;
+
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  color: rgb(var(--foreground));
-  background: rgb(var(--background));
+  color: hsl(var(--foreground));
+  background: hsl(var(--background));
 }
 
 @layer utilities {
@@ -16,8 +16,8 @@ body {
 
 @layer base {
   :root {
-    --background: 60, 100%, 98%;
-    --foreground: 0, 0%, 0%;
+    --background: 60 100% 98%;
+    --foreground: 0 0% 0%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
@@ -83,11 +83,5 @@ body {
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
   }
 }
