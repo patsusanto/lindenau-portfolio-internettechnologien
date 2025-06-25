@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server"
 import { getAllArtworks } from "@/lib/db"
+import { NextRequest } from "next/server"
 
-export async function GET() {
+export async function GET(request: NextRequest, { params }: any) {
   try {
     const artworks = await getAllArtworks()
     return NextResponse.json(artworks)
