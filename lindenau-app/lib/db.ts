@@ -192,6 +192,8 @@ export const deleteArtwork = async (id: string): Promise<boolean> => {
 }
 
 // Helper function to update positions after deletion
+// TODO: Replace 'any' with the actual Supabase client type if available
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const updatePositionsAfterDelete = async (supabase: any) => {
   try {
     // Get all artworks ordered by position

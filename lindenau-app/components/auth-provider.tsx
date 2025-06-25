@@ -23,9 +23,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Get initial session
     const getInitialSession = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession()
+      const { session } = (await supabase.auth.getSession()).data
       setUser(session?.user ?? null)
       setIsLoading(false)
     }
@@ -35,7 +33,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Listen for auth changes
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
+    } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null)
       setIsLoading(false)
     })
@@ -45,17 +43,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (email: string, password: string) => {
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
-
       if (error) {
         return { success: false, error: error.message }
       }
-
       return { success: true }
-    } catch (error) {
+    } catch {
       return { success: false, error: "An unexpected error occurred" }
     }
   }

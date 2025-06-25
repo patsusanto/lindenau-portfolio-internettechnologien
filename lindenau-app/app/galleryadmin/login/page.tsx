@@ -41,7 +41,7 @@ export default function AdminLogin() {
           type: "error",
         })
       }
-    } catch (error) {
+    } catch {
       toast({
         title: "Error",
         description: "An error occurred during login",
