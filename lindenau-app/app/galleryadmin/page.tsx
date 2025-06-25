@@ -256,129 +256,129 @@ function GalleryAdminContent() {
             <TabsContent value="all" className="space-y-4">
               <div className="bg-white shadow rounded-md overflow-x-auto">
                 <div className="min-w-[600px]">
-                  <DragDropContext onDragEnd={onDragEnd}>
-                    <Droppable droppableId="artworks">
-                      {(provided) => (
-                        <table
+                <DragDropContext onDragEnd={onDragEnd}>
+                  <Droppable droppableId="artworks">
+                    {(provided) => (
+                      <table
                           className="min-w-full divide-y divide-gray-200 text-xs sm:text-sm"
-                          {...provided.droppableProps}
-                          ref={provided.innerRef}
-                        >
-                          <thead className="bg-gray-50">
-                            <tr>
-                              <th style={{ width: "40px" }} className="px-2 py-3"></th>
-                              <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                              >
-                                Image
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                              >
-                                Title
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                              >
-                                Techniques
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                              >
-                                Availability
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                              >
-                                Position
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
-                              >
-                                Actions
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody className="bg-white divide-y divide-gray-200">
-                            {filteredArtworks().map((artwork, index) => (
-                              <Draggable key={artwork.id} draggableId={artwork.id.toString()} index={index}>
-                                {(provided) => (
-                                  <tr ref={provided.innerRef} {...provided.draggableProps}>
-                                    <td className="px-2" {...provided.dragHandleProps}>
-                                      <GripVertical className="h-5 w-5 text-gray-400" />
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                      <div className="w-16 h-16 relative">
-                                        <Image
-                                          src={artwork.image_url || "/placeholder.svg"}
-                                          alt={artwork.title}
-                                          fill
-                                          className="object-contain"
-                                        />
-                                      </div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                      <div className="text-sm font-medium text-gray-900">{artwork.title}</div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                      <div className="text-sm text-gray-500">{artwork.techniques}</div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                      <span
-                                        className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                                          artwork.availability === "Available"
-                                            ? "bg-green-100 text-green-800"
-                                            : "bg-red-100 text-red-800"
-                                        }`}
-                                      >
-                                        {artwork.availability}
-                                      </span>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                      {artwork.position + 1}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                      <DropdownMenu>
-                                        <DropdownMenuTrigger asChild>
-                                          <Button
-                                            variant="ghost"
-                                            size="sm"
-                                            className="text-gray-600 hover:text-gray-900"
-                                          >
-                                            <MoreVertical className="h-4 w-4" />
-                                          </Button>
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent align="end">
-                                          <DropdownMenuItem onClick={() => handleEditArtwork(artwork.id)}>
-                                            <Edit className="h-4 w-4 mr-2" />
-                                            Edit
-                                          </DropdownMenuItem>
-                                          <DropdownMenuItem 
-                                            onClick={() => handleDeleteArtwork(artwork.id)}
-                                            className="text-red-600 focus:text-red-600"
-                                          >
-                                            <Trash2 className="h-4 w-4 mr-2" />
-                                            Delete
-                                          </DropdownMenuItem>
-                                        </DropdownMenuContent>
-                                      </DropdownMenu>
-                                    </td>
-                                  </tr>
-                                )}
-                              </Draggable>
-                            ))}
-                            {provided.placeholder}
-                          </tbody>
-                        </table>
-                      )}
-                    </Droppable>
-                  </DragDropContext>
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                      >
+                        <thead className="bg-gray-50">
+                          <tr>
+                            <th style={{ width: "40px" }} className="px-2 py-3"></th>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Image
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Title
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Techniques
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Availability
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Position
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Actions
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                          {filteredArtworks().map((artwork, index) => (
+                            <Draggable key={artwork.id} draggableId={artwork.id.toString()} index={index}>
+                              {(provided) => (
+                                <tr ref={provided.innerRef} {...provided.draggableProps}>
+                                  <td className="px-2" {...provided.dragHandleProps}>
+                                    <GripVertical className="h-5 w-5 text-gray-400" />
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap">
+                                    <div className="w-16 h-16 relative">
+                                      <Image
+                                        src={artwork.image_url || "/placeholder.svg"}
+                                        alt={artwork.title}
+                                        fill
+                                        className="object-contain"
+                                      />
+                                    </div>
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap">
+                                    <div className="text-sm font-medium text-gray-900">{artwork.title}</div>
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap">
+                                    <div className="text-sm text-gray-500">{artwork.techniques}</div>
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap">
+                                    <span
+                                      className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                                        artwork.availability === "Available"
+                                          ? "bg-green-100 text-green-800"
+                                          : "bg-red-100 text-red-800"
+                                      }`}
+                                    >
+                                      {artwork.availability}
+                                    </span>
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {artwork.position + 1}
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <DropdownMenu>
+                                      <DropdownMenuTrigger asChild>
+                                        <Button
+                                          variant="ghost"
+                                          size="sm"
+                                          className="text-gray-600 hover:text-gray-900"
+                                        >
+                                          <MoreVertical className="h-4 w-4" />
+                                        </Button>
+                                      </DropdownMenuTrigger>
+                                      <DropdownMenuContent align="end">
+                                        <DropdownMenuItem onClick={() => handleEditArtwork(artwork.id)}>
+                                          <Edit className="h-4 w-4 mr-2" />
+                                          Edit
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem 
+                                          onClick={() => handleDeleteArtwork(artwork.id)}
+                                          className="text-red-600 focus:text-red-600"
+                                        >
+                                          <Trash2 className="h-4 w-4 mr-2" />
+                                          Delete
+                                        </DropdownMenuItem>
+                                      </DropdownMenuContent>
+                                    </DropdownMenu>
+                                  </td>
+                                </tr>
+                              )}
+                            </Draggable>
+                          ))}
+                          {provided.placeholder}
+                        </tbody>
+                      </table>
+                    )}
+                  </Droppable>
+                </DragDropContext>
                 </div>
               </div>
             </TabsContent>
@@ -387,112 +387,112 @@ function GalleryAdminContent() {
             <TabsContent value="available" className="space-y-4">
               <div className="bg-white shadow rounded-md overflow-x-auto">
                 <div className="min-w-[500px]">
-                  <DragDropContext onDragEnd={onDragEnd}>
-                    <Droppable droppableId="available-artworks">
-                      {(provided) => (
-                        <table
+                <DragDropContext onDragEnd={onDragEnd}>
+                  <Droppable droppableId="available-artworks">
+                    {(provided) => (
+                      <table
                           className="min-w-full divide-y divide-gray-200 text-xs sm:text-sm"
-                          {...provided.droppableProps}
-                          ref={provided.innerRef}
-                        >
-                          <thead className="bg-gray-50">
-                            <tr>
-                              <th style={{ width: "40px" }} className="px-2 py-3"></th>
-                              <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                              >
-                                Image
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                              >
-                                Title
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                              >
-                                Techniques
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                              >
-                                Position
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
-                              >
-                                Actions
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody className="bg-white divide-y divide-gray-200">
-                            {filteredArtworks().map((artwork, index) => (
-                              <Draggable key={artwork.id} draggableId={`available-${artwork.id}`} index={index}>
-                                {(provided) => (
-                                  <tr ref={provided.innerRef} {...provided.draggableProps}>
-                                    <td className="px-2" {...provided.dragHandleProps}>
-                                      <GripVertical className="h-5 w-5 text-gray-400" />
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                      <div className="w-16 h-16 relative">
-                                        <Image
-                                          src={artwork.image_url || "/placeholder.svg"}
-                                          alt={artwork.title}
-                                          fill
-                                          className="object-contain"
-                                        />
-                                      </div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                      <div className="text-sm font-medium text-gray-900">{artwork.title}</div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                      <div className="text-sm text-gray-500">{artwork.techniques}</div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                      {artwork.position + 1}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                      <DropdownMenu>
-                                        <DropdownMenuTrigger asChild>
-                                          <Button
-                                            variant="ghost"
-                                            size="sm"
-                                            className="text-gray-600 hover:text-gray-900"
-                                          >
-                                            <MoreVertical className="h-4 w-4" />
-                                          </Button>
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent align="end">
-                                          <DropdownMenuItem onClick={() => handleEditArtwork(artwork.id)}>
-                                            <Edit className="h-4 w-4 mr-2" />
-                                            Edit
-                                          </DropdownMenuItem>
-                                          <DropdownMenuItem 
-                                            onClick={() => handleDeleteArtwork(artwork.id)}
-                                            className="text-red-600 focus:text-red-600"
-                                          >
-                                            <Trash2 className="h-4 w-4 mr-2" />
-                                            Delete
-                                          </DropdownMenuItem>
-                                        </DropdownMenuContent>
-                                      </DropdownMenu>
-                                    </td>
-                                  </tr>
-                                )}
-                              </Draggable>
-                            ))}
-                            {provided.placeholder}
-                          </tbody>
-                        </table>
-                      )}
-                    </Droppable>
-                  </DragDropContext>
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                      >
+                        <thead className="bg-gray-50">
+                          <tr>
+                            <th style={{ width: "40px" }} className="px-2 py-3"></th>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Image
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Title
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Techniques
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Position
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Actions
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                          {filteredArtworks().map((artwork, index) => (
+                            <Draggable key={artwork.id} draggableId={`available-${artwork.id}`} index={index}>
+                              {(provided) => (
+                                <tr ref={provided.innerRef} {...provided.draggableProps}>
+                                  <td className="px-2" {...provided.dragHandleProps}>
+                                    <GripVertical className="h-5 w-5 text-gray-400" />
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap">
+                                    <div className="w-16 h-16 relative">
+                                      <Image
+                                        src={artwork.image_url || "/placeholder.svg"}
+                                        alt={artwork.title}
+                                        fill
+                                        className="object-contain"
+                                      />
+                                    </div>
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap">
+                                    <div className="text-sm font-medium text-gray-900">{artwork.title}</div>
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap">
+                                    <div className="text-sm text-gray-500">{artwork.techniques}</div>
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {artwork.position + 1}
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <DropdownMenu>
+                                      <DropdownMenuTrigger asChild>
+                                        <Button
+                                          variant="ghost"
+                                          size="sm"
+                                          className="text-gray-600 hover:text-gray-900"
+                                        >
+                                          <MoreVertical className="h-4 w-4" />
+                                        </Button>
+                                      </DropdownMenuTrigger>
+                                      <DropdownMenuContent align="end">
+                                        <DropdownMenuItem onClick={() => handleEditArtwork(artwork.id)}>
+                                          <Edit className="h-4 w-4 mr-2" />
+                                          Edit
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem 
+                                          onClick={() => handleDeleteArtwork(artwork.id)}
+                                          className="text-red-600 focus:text-red-600"
+                                        >
+                                          <Trash2 className="h-4 w-4 mr-2" />
+                                          Delete
+                                        </DropdownMenuItem>
+                                      </DropdownMenuContent>
+                                    </DropdownMenu>
+                                  </td>
+                                </tr>
+                              )}
+                            </Draggable>
+                          ))}
+                          {provided.placeholder}
+                        </tbody>
+                      </table>
+                    )}
+                  </Droppable>
+                </DragDropContext>
                 </div>
               </div>
             </TabsContent>
@@ -501,112 +501,112 @@ function GalleryAdminContent() {
             <TabsContent value="sold" className="space-y-4">
               <div className="bg-white shadow rounded-md overflow-x-auto">
                 <div className="min-w-[500px]">
-                  <DragDropContext onDragEnd={onDragEnd}>
-                    <Droppable droppableId="sold-artworks">
-                      {(provided) => (
-                        <table
+                <DragDropContext onDragEnd={onDragEnd}>
+                  <Droppable droppableId="sold-artworks">
+                    {(provided) => (
+                      <table
                           className="min-w-full divide-y divide-gray-200 text-xs sm:text-sm"
-                          {...provided.droppableProps}
-                          ref={provided.innerRef}
-                        >
-                          <thead className="bg-gray-50">
-                            <tr>
-                              <th style={{ width: "40px" }} className="px-2 py-3"></th>
-                              <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                              >
-                                Image
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                              >
-                                Title
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                              >
-                                Techniques
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                              >
-                                Position
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
-                              >
-                                Actions
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody className="bg-white divide-y divide-gray-200">
-                            {filteredArtworks().map((artwork, index) => (
-                              <Draggable key={artwork.id} draggableId={`sold-${artwork.id}`} index={index}>
-                                {(provided) => (
-                                  <tr ref={provided.innerRef} {...provided.draggableProps}>
-                                    <td className="px-2" {...provided.dragHandleProps}>
-                                      <GripVertical className="h-5 w-5 text-gray-400" />
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                      <div className="w-16 h-16 relative">
-                                        <Image
-                                          src={artwork.image_url || "/placeholder.svg"}
-                                          alt={artwork.title}
-                                          fill
-                                          className="object-contain"
-                                        />
-                                      </div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                      <div className="text-sm font-medium text-gray-900">{artwork.title}</div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                      <div className="text-sm text-gray-500">{artwork.techniques}</div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                      {artwork.position + 1}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                      <DropdownMenu>
-                                        <DropdownMenuTrigger asChild>
-                                          <Button
-                                            variant="ghost"
-                                            size="sm"
-                                            className="text-gray-600 hover:text-gray-900"
-                                          >
-                                            <MoreVertical className="h-4 w-4" />
-                                          </Button>
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent align="end">
-                                          <DropdownMenuItem onClick={() => handleEditArtwork(artwork.id)}>
-                                            <Edit className="h-4 w-4 mr-2" />
-                                            Edit
-                                          </DropdownMenuItem>
-                                          <DropdownMenuItem 
-                                            onClick={() => handleDeleteArtwork(artwork.id)}
-                                            className="text-red-600 focus:text-red-600"
-                                          >
-                                            <Trash2 className="h-4 w-4 mr-2" />
-                                            Delete
-                                          </DropdownMenuItem>
-                                        </DropdownMenuContent>
-                                      </DropdownMenu>
-                                    </td>
-                                  </tr>
-                                )}
-                              </Draggable>
-                            ))}
-                            {provided.placeholder}
-                          </tbody>
-                        </table>
-                      )}
-                    </Droppable>
-                  </DragDropContext>
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                      >
+                        <thead className="bg-gray-50">
+                          <tr>
+                            <th style={{ width: "40px" }} className="px-2 py-3"></th>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Image
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Title
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Techniques
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Position
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Actions
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                          {filteredArtworks().map((artwork, index) => (
+                            <Draggable key={artwork.id} draggableId={`sold-${artwork.id}`} index={index}>
+                              {(provided) => (
+                                <tr ref={provided.innerRef} {...provided.draggableProps}>
+                                  <td className="px-2" {...provided.dragHandleProps}>
+                                    <GripVertical className="h-5 w-5 text-gray-400" />
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap">
+                                    <div className="w-16 h-16 relative">
+                                      <Image
+                                        src={artwork.image_url || "/placeholder.svg"}
+                                        alt={artwork.title}
+                                        fill
+                                        className="object-contain"
+                                      />
+                                    </div>
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap">
+                                    <div className="text-sm font-medium text-gray-900">{artwork.title}</div>
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap">
+                                    <div className="text-sm text-gray-500">{artwork.techniques}</div>
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {artwork.position + 1}
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <DropdownMenu>
+                                      <DropdownMenuTrigger asChild>
+                                        <Button
+                                          variant="ghost"
+                                          size="sm"
+                                          className="text-gray-600 hover:text-gray-900"
+                                        >
+                                          <MoreVertical className="h-4 w-4" />
+                                        </Button>
+                                      </DropdownMenuTrigger>
+                                      <DropdownMenuContent align="end">
+                                        <DropdownMenuItem onClick={() => handleEditArtwork(artwork.id)}>
+                                          <Edit className="h-4 w-4 mr-2" />
+                                          Edit
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem 
+                                          onClick={() => handleDeleteArtwork(artwork.id)}
+                                          className="text-red-600 focus:text-red-600"
+                                        >
+                                          <Trash2 className="h-4 w-4 mr-2" />
+                                          Delete
+                                        </DropdownMenuItem>
+                                      </DropdownMenuContent>
+                                    </DropdownMenu>
+                                  </td>
+                                </tr>
+                              )}
+                            </Draggable>
+                          ))}
+                          {provided.placeholder}
+                        </tbody>
+                      </table>
+                    )}
+                  </Droppable>
+                </DragDropContext>
                 </div>
               </div>
             </TabsContent>
