@@ -1,24 +1,24 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useEffect } from "react"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { useAuth } from "./auth-provider"
+import type React from "react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useAuth } from "./auth-provider";
 
 interface ProtectedRouteProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const { isAuthenticated, isLoading } = useAuth()
-  const router = useRouter()
+  const { isAuthenticated, isLoading } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.push("/galleryadmin/login")
+      router.push("/galleryadmin/login");
     }
-  }, [isAuthenticated, isLoading, router])
+  }, [isAuthenticated, isLoading, router]);
 
   if (isLoading) {
     return (
@@ -32,12 +32,12 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-black"></div>
         </main>
       </div>
-    )
+    );
   }
 
   if (!isAuthenticated) {
-    return null // Will redirect to login
+    return null; // Will redirect to login
   }
 
-  return <>{children}</>
+  return <>{children}</>;
 }

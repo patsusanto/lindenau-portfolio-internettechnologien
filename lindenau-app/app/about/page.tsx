@@ -1,6 +1,6 @@
-import Image from "next/image"
-import Link from "next/link"
-import ContactForm from "@/components/contact-form"
+import Image from "next/image";
+import Link from "next/link";
+import ContactForm from "@/components/contact-form";
 
 export default function About() {
   return (
@@ -47,9 +47,11 @@ export default function About() {
           </div>
           <div className="flex flex-col justify-center">
             <blockquote className="text-lg italic mb-6 leading-relaxed">
-              Colors are like magic to me - when I paint, I forget the world around me and find myself in another,
-              enchanting reality. Every brushstroke carries a part of me that I bring to the canvas. It touches me
-              deeply to share this special world with others, as if I were giving them a piece of my heart.
+              Colors are like magic to me - when I paint, I forget the world
+              around me and find myself in another, enchanting reality. Every
+              brushstroke carries a part of me that I bring to the canvas. It
+              touches me deeply to share this special world with others, as if I
+              were giving them a piece of my heart.
             </blockquote>
             <p className="text-right">~Lindenau</p>
           </div>
@@ -74,5 +76,5 @@ export default function About() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

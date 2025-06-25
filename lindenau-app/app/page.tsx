@@ -1,11 +1,13 @@
-import Image from "next/image"
-import Link from "next/link"
-import { getAllArtworks, generateSlug } from "@/lib/db"
+import Image from "next/image";
+import Link from "next/link";
+import { getAllArtworks, generateSlug } from "@/lib/db";
 
 export default async function Home() {
   // Get featured artworks for the homepage (first 3)
-  const allArtworks = await getAllArtworks()
-  const featuredArtworks = [...allArtworks].sort((a, b) => a.position - b.position).slice(0, 3)
+  const allArtworks = await getAllArtworks();
+  const featuredArtworks = [...allArtworks]
+    .sort((a, b) => a.position - b.position)
+    .slice(0, 3);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#fffde9]">
@@ -40,7 +42,11 @@ export default async function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {featuredArtworks.length > 0
             ? featuredArtworks.map((artwork) => (
-                <Link key={artwork.id} href={`/gallery/${generateSlug(artwork.title)}`} className="block group">
+                <Link
+                  key={artwork.id}
+                  href={`/gallery/${generateSlug(artwork.title)}`}
+                  className="block group"
+                >
                   <div
                     className="w-full h-[560px] relative mx-auto overflow-hidden transition-all duration-300 hover:shadow-xl"
                     style={{ maxWidth: "420px" }}
@@ -96,5 +102,5 @@ export default async function Home() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

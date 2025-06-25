@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 
 export default function ContactForm() {
   const [formState, setFormState] = useState({
@@ -14,21 +14,23 @@ export default function ContactForm() {
     email: "",
     subject: "",
     message: "",
-  })
+  });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     setFormState({
       ...formState,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     // This would normally handle form submission, but is non-functional as requested
-    console.log("Form submitted:", formState)
-    alert("Thank you for your message! This form is currently non-functional.")
-  }
+    console.log("Form submitted:", formState);
+    alert("Thank you for your message! This form is currently non-functional.");
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -86,9 +88,12 @@ export default function ContactForm() {
         />
       </div>
 
-      <Button type="submit" className="bg-black text-white hover:bg-black/80 px-8 py-2 w-full md:w-auto">
+      <Button
+        type="submit"
+        className="bg-black text-white hover:bg-black/80 px-8 py-2 w-full md:w-auto"
+      >
         Send Message
       </Button>
     </form>
-  )
+  );
 }

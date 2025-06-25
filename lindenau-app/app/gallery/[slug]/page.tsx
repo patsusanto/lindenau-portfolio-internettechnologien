@@ -1,13 +1,17 @@
-import Image from "next/image"
-import Link from "next/link"
-import { notFound } from "next/navigation"
-import { getArtworkBySlug } from "@/lib/db"
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { getArtworkBySlug } from "@/lib/db";
 
-export default async function ArtworkDetail({ params }: { params: { slug: string } }) {
-  const artwork = await getArtworkBySlug(params.slug)
+export default async function ArtworkDetail({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const artwork = await getArtworkBySlug(params.slug);
 
   if (!artwork) {
-    notFound()
+    notFound();
   }
 
   return (
@@ -65,14 +69,22 @@ export default async function ArtworkDetail({ params }: { params: { slug: string
 
               <div className="mt-8 space-y-2">
                 <p>
-                  <span className="font-medium">Measurements:</span> {artwork.measurements}
+                  <span className="font-medium">Measurements:</span>{" "}
+                  {artwork.measurements}
                 </p>
                 <p>
-                  <span className="font-medium">Techniques:</span> {artwork.techniques}
+                  <span className="font-medium">Techniques:</span>{" "}
+                  {artwork.techniques}
                 </p>
                 <p>
                   <span className="font-medium">Availability:</span>{" "}
-                  <span className={artwork.availability === "Sold" ? "text-red-600" : "text-green-600"}>
+                  <span
+                    className={
+                      artwork.availability === "Sold"
+                        ? "text-red-600"
+                        : "text-green-600"
+                    }
+                  >
                     {artwork.availability}
                   </span>
                 </p>
@@ -105,5 +117,5 @@ export default async function ArtworkDetail({ params }: { params: { slug: string
         </div>
       </footer>
     </div>
-  )
+  );
 }

@@ -1,14 +1,14 @@
-import Image from "next/image"
-import Link from "next/link"
-import { getAllArtworks } from "@/lib/db"
-import { generateSlug } from "@/lib/db"
+import Image from "next/image";
+import Link from "next/link";
+import { getAllArtworks } from "@/lib/db";
+import { generateSlug } from "@/lib/db";
 
 export default async function Gallery() {
   // Get artworks from the database
-  const artworks = await getAllArtworks()
+  const artworks = await getAllArtworks();
 
   // Sort artworks by position
-  const sortedArtworks = [...artworks].sort((a, b) => a.position - b.position)
+  const sortedArtworks = [...artworks].sort((a, b) => a.position - b.position);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#fffde9]">
@@ -50,7 +50,11 @@ export default async function Gallery() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
             {sortedArtworks.map((artwork) => (
-              <Link key={artwork.id} href={`/gallery/${generateSlug(artwork.title)}`} className="block group">
+              <Link
+                key={artwork.id}
+                href={`/gallery/${generateSlug(artwork.title)}`}
+                className="block group"
+              >
                 <div
                   className="w-full h-[560px] relative mx-auto overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2"
                   style={{ maxWidth: "420px" }}
@@ -85,5 +89,5 @@ export default async function Gallery() {
         </div>
       </footer>
     </div>
-  )
+  );
 }
