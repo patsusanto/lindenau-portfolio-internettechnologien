@@ -183,12 +183,12 @@ function GalleryAdminContent() {
   return (
     <div className="min-h-screen flex flex-col bg-[#fffde9]">
       {/* Header */}
-      <header className="container mx-auto px-4 sm:px-6 py-6 sm:py-8 flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-normal text-center sm:text-left">
+      <header className="container mx-auto px-6 py-8 flex justify-between items-center">
+        <h1 className="text-3xl md:text-4xl font-normal">
           <Link href="/">Tatjana Lindenau</Link>
         </h1>
-        <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
-          <span className="text-xs sm:text-sm">Welcome, {user?.email}</span>
+        <div className="flex items-center space-x-4">
+          <span className="text-sm">Welcome, {user?.email}</span>
           <Button variant="outline" size="sm" onClick={handleLogout} className="flex items-center">
             <LogOut className="h-4 w-4 mr-2" />
             Logout
@@ -197,17 +197,17 @@ function GalleryAdminContent() {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-2 sm:px-6 py-6 sm:py-8 flex-grow">
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-8 gap-4 sm:gap-0">
-          <h2 className="text-xl sm:text-2xl">Gallery Management</h2>
-          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+      <main className="container mx-auto px-6 py-8 flex-grow">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-2xl">Gallery Management</h2>
+          <div className="flex items-center gap-4">
             {isSaving && (
-              <span className="text-xs sm:text-sm text-gray-500 flex items-center">
+              <span className="text-sm text-gray-500 flex items-center">
                 <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-black mr-2"></div>
                 Saving changes...
               </span>
             )}
-            <Button onClick={handleAddArtwork} className="bg-black hover:bg-black/80 flex items-center text-white w-full sm:w-auto">
+            <Button onClick={handleAddArtwork} className="bg-black hover:bg-black/80 flex items-center text-white">
               <PlusCircle className="h-4 w-4 mr-2" />
               Add New Artwork
             </Button>
@@ -219,16 +219,16 @@ function GalleryAdminContent() {
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-black"></div>
           </div>
         ) : artworks.length === 0 ? (
-          <div className="bg-white p-6 sm:p-8 text-center rounded-md shadow">
-            <h3 className="text-lg sm:text-xl mb-2 sm:mb-4">No artworks yet</h3>
-            <p className="mb-4 sm:mb-6 text-sm sm:text-base">Start by adding your first artwork to the gallery.</p>
-            <Button onClick={handleAddArtwork} className="bg-black hover:bg-black/80 text-white w-full sm:w-auto">
+          <div className="bg-white p-8 text-center rounded-md shadow">
+            <h3 className="text-xl mb-4">No artworks yet</h3>
+            <p className="mb-6">Start by adding your first artwork to the gallery.</p>
+            <Button onClick={handleAddArtwork} className="bg-black hover:bg-black/80 text-white">
               Add Your First Artwork
             </Button>
           </div>
         ) : (
           <Tabs defaultValue="all" className="w-full" onValueChange={setActiveTab}>
-            <TabsList className="mb-4 sm:mb-6 bg-white border border-gray-200 p-1 rounded-lg shadow-sm flex flex-col sm:flex-row gap-2 sm:gap-0">
+            <TabsList className="mb-6 bg-white border border-gray-200 p-1 rounded-lg shadow-sm">
               <TabsTrigger 
                 value="all" 
                 className="flex items-center gap-2 px-4 py-2 rounded-md transition-all duration-200 data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:shadow-sm hover:bg-gray-50 data-[state=active]:hover:bg-black"
@@ -252,15 +252,13 @@ function GalleryAdminContent() {
               </TabsTrigger>
             </TabsList>
 
-            {/* Responsive Table Wrapper for All Artworks */}
             <TabsContent value="all" className="space-y-4">
-              <div className="bg-white shadow rounded-md overflow-x-auto">
-                <div className="min-w-[600px]">
+              <div className="bg-white shadow rounded-md overflow-hidden">
                 <DragDropContext onDragEnd={onDragEnd}>
                   <Droppable droppableId="artworks">
                     {(provided) => (
                       <table
-                          className="min-w-full divide-y divide-gray-200 text-xs sm:text-sm"
+                        className="min-w-full divide-y divide-gray-200"
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                       >
@@ -379,19 +377,16 @@ function GalleryAdminContent() {
                     )}
                   </Droppable>
                 </DragDropContext>
-                </div>
               </div>
             </TabsContent>
 
-            {/* Responsive Table Wrapper for Available Artworks */}
             <TabsContent value="available" className="space-y-4">
-              <div className="bg-white shadow rounded-md overflow-x-auto">
-                <div className="min-w-[500px]">
+              <div className="bg-white shadow rounded-md overflow-hidden">
                 <DragDropContext onDragEnd={onDragEnd}>
                   <Droppable droppableId="available-artworks">
                     {(provided) => (
                       <table
-                          className="min-w-full divide-y divide-gray-200 text-xs sm:text-sm"
+                        className="min-w-full divide-y divide-gray-200"
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                       >
@@ -493,19 +488,16 @@ function GalleryAdminContent() {
                     )}
                   </Droppable>
                 </DragDropContext>
-                </div>
               </div>
             </TabsContent>
 
-            {/* Responsive Table Wrapper for Sold Artworks */}
             <TabsContent value="sold" className="space-y-4">
-              <div className="bg-white shadow rounded-md overflow-x-auto">
-                <div className="min-w-[500px]">
+              <div className="bg-white shadow rounded-md overflow-hidden">
                 <DragDropContext onDragEnd={onDragEnd}>
                   <Droppable droppableId="sold-artworks">
                     {(provided) => (
                       <table
-                          className="min-w-full divide-y divide-gray-200 text-xs sm:text-sm"
+                        className="min-w-full divide-y divide-gray-200"
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                       >
@@ -607,7 +599,6 @@ function GalleryAdminContent() {
                     )}
                   </Droppable>
                 </DragDropContext>
-                </div>
               </div>
             </TabsContent>
           </Tabs>
@@ -615,8 +606,8 @@ function GalleryAdminContent() {
       </main>
 
       {/* Footer */}
-      <footer className="container mx-auto px-4 sm:px-6 py-6 sm:py-8 text-center text-[#837e7e] text-xs sm:text-base">
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-6">
+      <footer className="container mx-auto px-6 py-8 text-center text-[#837e7e]">
+        <div className="space-x-6">
           <Link href="/privacy" className="hover:underline">
             Privacy Policy
           </Link>
