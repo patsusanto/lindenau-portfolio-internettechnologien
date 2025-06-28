@@ -214,10 +214,9 @@ function GalleryAdminContent() {
           <span className="text-sm">{t('welcome')}, {user?.email}</span>
           <LanguageSwitcher />
           <Button
-            variant="outline"
             size="sm"
             onClick={handleLogout}
-            className="flex items-center"
+            className="flex items-center bg-black text-white hover:bg-black/80"
           >
             <LogOut className="h-4 w-4 mr-2" />
             {t('logout')}

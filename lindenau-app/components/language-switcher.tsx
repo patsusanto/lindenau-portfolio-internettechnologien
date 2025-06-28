@@ -35,15 +35,15 @@ export function LanguageSwitcher() {
           <ChevronDown className="h-3 w-3" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-48">
+      <DropdownMenuContent align="end" className="w-48 bg-white">
         {languages.map((lang) => (
           <DropdownMenuItem
             key={lang.code}
             onClick={() => setLanguage(lang.code as 'en' | 'de')}
             className={`flex items-center gap-3 px-4 py-3 cursor-pointer transition-colors duration-150 ${
               language === lang.code
-                ? 'bg-black text-white font-medium'
-                : 'hover:bg-black'
+                ? 'bg-white text-black font-medium'
+                : 'hover:bg-white'
             }`}
           >
             <span className="text-lg">{lang.flag}</span>

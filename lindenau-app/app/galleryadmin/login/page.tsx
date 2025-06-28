@@ -139,7 +139,7 @@ export default function AdminLogin() {
 
               <Button
                 type="submit"
-                className="w-full bg-black hover:bg-black/80"
+                className="w-full bg-black text-white hover:bg-black/80"
                 disabled={isSubmitting || !email.trim() || !password.trim()}
               >
                 {isSubmitting ? "Signing in..." : "Sign In"}
