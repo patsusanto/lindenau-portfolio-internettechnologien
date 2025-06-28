@@ -24,16 +24,15 @@ export function LanguageSwitcher() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="outline"
           size="sm"
-          className="flex items-center gap-2 px-3 py-2 border-gray-300 hover:bg-gray-50 transition-colors duration-200"
+          className="flex items-center gap-2 px-3 py-2 bg-black text-white hover:bg-black/80 transition-colors duration-200"
         >
-          <Globe className="h-4 w-4 text-gray-600" />
+          <Globe className="h-4 w-4" />
           <span className="text-lg">{currentLanguage?.flag}</span>
-          <span className="text-sm font-medium text-gray-700 hidden sm:inline">
+          <span className="text-sm font-medium hidden sm:inline">
             {currentLanguage?.name}
           </span>
-          <ChevronDown className="h-3 w-3 text-gray-500" />
+          <ChevronDown className="h-3 w-3" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
