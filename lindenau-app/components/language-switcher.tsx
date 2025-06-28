@@ -42,8 +42,8 @@ export function LanguageSwitcher() {
             onClick={() => setLanguage(lang.code as 'en' | 'de')}
             className={`flex items-center gap-3 px-4 py-3 cursor-pointer transition-colors duration-150 ${
               language === lang.code
-                ? 'bg-gray-100 text-gray-900 font-medium'
-                : 'hover:bg-gray-50'
+                ? 'bg-black text-white font-medium'
+                : 'hover:bg-black'
             }`}
           >
             <span className="text-lg">{lang.flag}</span>
