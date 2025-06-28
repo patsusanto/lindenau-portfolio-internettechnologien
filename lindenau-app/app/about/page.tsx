@@ -1,8 +1,14 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import ContactForm from "@/components/contact-form";
+import { useTranslation } from "@/components/translation-provider";
+import { LanguageSwitcher } from "@/components/language-switcher";
 
 export default function About() {
+  const { t } = useTranslation();
+
   return (
     <div className="min-h-screen flex flex-col bg-[#fffde9]">
       {/* Header */}
@@ -10,30 +16,33 @@ export default function About() {
         <h1 className="text-3xl md:text-4xl font-normal">
           <Link href="/">Tatjana Lindenau</Link>
         </h1>
-        <nav>
-          <ul className="flex space-x-8">
-            <li>
-              <Link href="/" className="hover:underline">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link href="/gallery" className="hover:underline">
-                Gallery
-              </Link>
-            </li>
-            <li>
-              <Link href="/about" className="hover:underline underline">
-                About & Contact
-              </Link>
-            </li>
-          </ul>
-        </nav>
+        <div className="flex items-center gap-4">
+          <nav>
+            <ul className="flex space-x-8">
+              <li>
+                <Link href="/" className="hover:underline">
+                  {t('home')}
+                </Link>
+              </li>
+              <li>
+                <Link href="/gallery" className="hover:underline">
+                  {t('gallery')}
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:underline underline">
+                  {t('about')}
+                </Link>
+              </li>
+            </ul>
+          </nav>
+          <LanguageSwitcher />
+        </div>
       </header>
 
       {/* Main Content */}
       <main className="container mx-auto px-6 py-8 flex-grow">
-        <h2 className="text-2xl mb-8">About</h2>
+        <h2 className="text-2xl mb-8">{t('aboutTitle')}</h2>
 
         {/* About Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
@@ -47,18 +56,14 @@ export default function About() {
           </div>
           <div className="flex flex-col justify-center">
             <blockquote className="text-lg italic mb-6 leading-relaxed">
-              Colors are like magic to me - when I paint, I forget the world
-              around me and find myself in another, enchanting reality. Every
-              brushstroke carries a part of me that I bring to the canvas. It
-              touches me deeply to share this special world with others, as if I
-              were giving them a piece of my heart.
+              {t('aboutQuote')}
             </blockquote>
-            <p className="text-right">~Lindenau</p>
+            <p className="text-right">{t('aboutQuoteAuthor')}</p>
           </div>
         </div>
 
         {/* Contact Section */}
-        <h2 className="text-2xl mb-8">Contact</h2>
+        <h2 className="text-2xl mb-8">{t('contact')}</h2>
         <div className="max-w-2xl mx-auto">
           <ContactForm />
         </div>
@@ -68,10 +73,10 @@ export default function About() {
       <footer className="container mx-auto px-6 py-8 text-center text-[#837e7e]">
         <div className="space-x-6">
           <Link href="/privacy" className="hover:underline">
-            Privacy Policy
+            {t('privacyPolicy')}
           </Link>
           <Link href="/impressum" className="hover:underline">
-            Impressum
+            {t('impressum')}
           </Link>
         </div>
       </footer>

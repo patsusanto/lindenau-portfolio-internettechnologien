@@ -1,14 +1,72 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { getAllArtworks } from "@/lib/db";
-import { generateSlug } from "@/lib/db";
+import { getAllArtworksClient, generateSlug } from "@/lib/db-client";
+import { useTranslation } from "@/components/translation-provider";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { useEffect, useState } from "react";
+import type { Artwork } from "@/lib/db-client";
 
-export default async function Gallery() {
-  // Get artworks from the database
-  const artworks = await getAllArtworks();
+export default function Gallery() {
+  const { t } = useTranslation();
+  const [artworks, setArtworks] = useState<Artwork[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchArtworks = async () => {
+      try {
+        const fetchedArtworks = await getAllArtworksClient();
+        setArtworks(fetchedArtworks);
+      } catch (error) {
+        console.error("Error fetching artworks:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchArtworks();
+  }, []);
 
   // Sort artworks by position
   const sortedArtworks = [...artworks].sort((a, b) => a.position - b.position);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex flex-col bg-[#fffde9]">
+        <header className="container mx-auto px-6 py-8 flex justify-between items-center">
+          <h1 className="text-3xl md:text-4xl font-normal">
+            <Link href="/">Tatjana Lindenau</Link>
+          </h1>
+          <div className="flex items-center gap-4">
+            <nav>
+              <ul className="flex space-x-8">
+                <li>
+                  <Link href="/" className="hover:underline">
+                    {t('home')}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/gallery" className="hover:underline underline">
+                    {t('gallery')}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/about" className="hover:underline">
+                    {t('about')}
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+            <LanguageSwitcher />
+          </div>
+        </header>
+        <main className="container mx-auto px-6 py-8 flex-grow flex justify-center items-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-black"></div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-[#fffde9]">
@@ -17,35 +75,38 @@ export default async function Gallery() {
         <h1 className="text-3xl md:text-4xl font-normal">
           <Link href="/">Tatjana Lindenau</Link>
         </h1>
-        <nav>
-          <ul className="flex space-x-8">
-            <li>
-              <Link href="/" className="hover:underline">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link href="/gallery" className="hover:underline underline">
-                Gallery
-              </Link>
-            </li>
-            <li>
-              <Link href="/about" className="hover:underline">
-                About & Contact
-              </Link>
-            </li>
-          </ul>
-        </nav>
+        <div className="flex items-center gap-4">
+          <nav>
+            <ul className="flex space-x-8">
+              <li>
+                <Link href="/" className="hover:underline">
+                  {t('home')}
+                </Link>
+              </li>
+              <li>
+                <Link href="/gallery" className="hover:underline underline">
+                  {t('gallery')}
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:underline">
+                  {t('about')}
+                </Link>
+              </li>
+            </ul>
+          </nav>
+          <LanguageSwitcher />
+        </div>
       </header>
 
       {/* Main Content */}
       <main className="container mx-auto px-6 py-8 flex-grow">
-        <h2 className="text-2xl mb-8">Gallery</h2>
+        <h2 className="text-2xl mb-8">{t('galleryTitle')}</h2>
 
         {/* Gallery Grid - Images with 560px height and 420px width */}
         {sortedArtworks.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-lg text-gray-600">No artworks available yet.</p>
+            <p className="text-lg text-gray-600">{t('noArtworksAvailable')}</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
@@ -81,10 +142,10 @@ export default async function Gallery() {
       <footer className="container mx-auto px-6 py-8 text-center text-[#837e7e]">
         <div className="space-x-6">
           <Link href="/privacy" className="hover:underline">
-            Privacy Policy
+            {t('privacyPolicy')}
           </Link>
           <Link href="/impressum" className="hover:underline">
-            Impressum
+            {t('impressum')}
           </Link>
         </div>
       </footer>

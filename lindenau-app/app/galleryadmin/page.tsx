@@ -34,6 +34,8 @@ import type { Artwork } from "@/lib/db";
 import { useToast } from "@/components/toast-provider";
 import { ProtectedRoute } from "@/components/protected-route";
 import { useAuth } from "@/components/auth-provider";
+import { useTranslation } from "@/components/translation-provider";
+import { LanguageSwitcher } from "@/components/language-switcher";
 
 function GalleryAdminContent() {
   const [artworks, setArtworks] = useState<Artwork[]>([]);
@@ -43,6 +45,7 @@ function GalleryAdminContent() {
   const router = useRouter();
   const { toast } = useToast();
   const { logout, user } = useAuth();
+  const { t } = useTranslation();
 
   // Fetch artworks on component mount
   useEffect(() => {
@@ -56,7 +59,7 @@ function GalleryAdminContent() {
       } catch (error) {
         console.error("Error fetching artworks:", error);
         toast({
-          title: "Error",
+          title: t('error'),
           description: "Failed to load artworks",
           type: "error",
         });
@@ -66,7 +69,7 @@ function GalleryAdminContent() {
     };
 
     fetchArtworks();
-  }, [toast]);
+  }, [toast, t]);
 
   const handleAddArtwork = () => {
     router.push("/galleryadmin/artwork/new");
@@ -79,37 +82,37 @@ function GalleryAdminContent() {
   const handleLogout = () => {
     logout();
     toast({
-      title: "Success",
-      description: "Successfully logged out",
+      title: t('success'),
+      description: t('successfullyLoggedOut'),
       type: "success",
     });
     router.push("/");
   };
 
   const handleDeleteArtwork = async (id: string) => {
-    if (confirm("Are you sure you want to delete this artwork?")) {
+    if (confirm(t('areYouSureDelete'))) {
       try {
         const result = await deleteArtworkAction(id);
 
         if (result.success) {
           setArtworks(artworks.filter((artwork) => artwork.id !== id));
           toast({
-            title: "Success",
-            description: "Artwork deleted successfully",
+            title: t('success'),
+            description: t('artworkDeletedSuccessfully'),
             type: "success",
           });
         } else {
           toast({
-            title: "Error",
-            description: result.message || "Failed to delete artwork",
+            title: t('error'),
+            description: result.message || t('failedToDeleteArtwork'),
             type: "error",
           });
         }
       } catch (error) {
         console.error("Error deleting artwork:", error);
         toast({
-          title: "Error",
-          description: "Failed to delete artwork",
+          title: t('error'),
+          description: t('failedToDeleteArtwork'),
           type: "error",
         });
       }
@@ -152,14 +155,14 @@ function GalleryAdminContent() {
 
       if (result.success) {
         toast({
-          title: "Success",
-          description: "Artwork positions updated",
+          title: t('success'),
+          description: t('artworkPositionsUpdated'),
           type: "success",
         });
       } else {
         toast({
-          title: "Error",
-          description: result.message || "Failed to update positions",
+          title: t('error'),
+          description: result.message || t('failedToUpdatePositions'),
           type: "error",
         });
         // Refetch to ensure we have the correct state
@@ -168,8 +171,8 @@ function GalleryAdminContent() {
     } catch (error) {
       console.error("Error updating positions:", error);
       toast({
-        title: "Error",
-        description: "Failed to update positions",
+        title: t('error'),
+        description: t('failedToUpdatePositions'),
         type: "error",
       });
       // Refetch to ensure we have the correct state
@@ -208,7 +211,8 @@ function GalleryAdminContent() {
           <Link href="/">Tatjana Lindenau</Link>
         </h1>
         <div className="flex items-center space-x-4">
-          <span className="text-sm">Welcome, {user?.email}</span>
+          <span className="text-sm">{t('welcome')}, {user?.email}</span>
+          <LanguageSwitcher />
           <Button
             variant="outline"
             size="sm"
@@ -216,7 +220,7 @@ function GalleryAdminContent() {
             className="flex items-center"
           >
             <LogOut className="h-4 w-4 mr-2" />
-            Logout
+            {t('logout')}
           </Button>
         </div>
       </header>
@@ -224,12 +228,12 @@ function GalleryAdminContent() {
       {/* Main Content */}
       <main className="container mx-auto px-6 py-8 flex-grow">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl">Gallery Management</h2>
+          <h2 className="text-2xl">{t('galleryManagement')}</h2>
           <div className="flex items-center gap-4">
             {isSaving && (
               <span className="text-sm text-gray-500 flex items-center">
                 <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-black mr-2"></div>
-                Saving changes...
+                {t('savingChanges')}
               </span>
             )}
             <Button
@@ -237,7 +241,7 @@ function GalleryAdminContent() {
               className="bg-black hover:bg-black/80 flex items-center text-white"
             >
               <PlusCircle className="h-4 w-4 mr-2" />
-              Add New Artwork
+              {t('addNewArtwork')}
             </Button>
           </div>
         </div>
@@ -248,15 +252,15 @@ function GalleryAdminContent() {
           </div>
         ) : artworks.length === 0 ? (
           <div className="bg-white p-8 text-center rounded-md shadow">
-            <h3 className="text-xl mb-4">No artworks yet</h3>
+            <h3 className="text-xl mb-4">{t('noArtworksYet')}</h3>
             <p className="mb-6">
-              Start by adding your first artwork to the gallery.
+              {t('startByAdding')}
             </p>
             <Button
               onClick={handleAddArtwork}
               className="bg-black hover:bg-black/80 text-white"
             >
-              Add Your First Artwork
+              {t('addYourFirstArtwork')}
             </Button>
           </div>
         ) : (
@@ -271,21 +275,21 @@ function GalleryAdminContent() {
                 className="flex items-center gap-2 px-4 py-2 rounded-md transition-all duration-200 data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:shadow-sm hover:bg-gray-50 data-[state=active]:hover:bg-black"
               >
                 <Palette className="h-4 w-4" />
-                All Artworks
+                {t('allArtworks')}
               </TabsTrigger>
               <TabsTrigger
                 value="available"
                 className="flex items-center gap-2 px-4 py-2 rounded-md transition-all duration-200 data-[state=active]:bg-green-600 data-[state=active]:text-white data-[state=active]:shadow-sm hover:bg-gray-50 data-[state=active]:hover:bg-green-600"
               >
                 <CheckCircle className="h-4 w-4" />
-                Available
+                {t('available')}
               </TabsTrigger>
               <TabsTrigger
                 value="sold"
                 className="flex items-center gap-2 px-4 py-2 rounded-md transition-all duration-200 data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=active]:shadow-sm hover:bg-gray-50 data-[state=active]:hover:bg-red-600"
               >
                 <XCircle className="h-4 w-4" />
-                Sold
+                {t('sold')}
               </TabsTrigger>
             </TabsList>
 
@@ -309,37 +313,37 @@ function GalleryAdminContent() {
                               scope="col"
                               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                             >
-                              Image
+                              {t('image')}
                             </th>
                             <th
                               scope="col"
                               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                             >
-                              Title
+                              {t('title')}
                             </th>
                             <th
                               scope="col"
                               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                             >
-                              Techniques
+                              {t('techniques')}
                             </th>
                             <th
                               scope="col"
                               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                             >
-                              Availability
+                              {t('availability')}
                             </th>
                             <th
                               scope="col"
                               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                             >
-                              Position
+                              {t('position')}
                             </th>
                             <th
                               scope="col"
                               className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
                             >
-                              Actions
+                              {t('actions')}
                             </th>
                           </tr>
                         </thead>
@@ -392,7 +396,7 @@ function GalleryAdminContent() {
                                           : "bg-red-100 text-red-800"
                                       }`}
                                     >
-                                      {artwork.availability}
+                                      {artwork.availability === "Available" ? t('available') : t('sold')}
                                     </span>
                                   </td>
                                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -416,7 +420,7 @@ function GalleryAdminContent() {
                                           }
                                         >
                                           <Edit className="h-4 w-4 mr-2" />
-                                          Edit
+                                          {t('edit')}
                                         </DropdownMenuItem>
                                         <DropdownMenuItem
                                           onClick={() =>
@@ -425,7 +429,7 @@ function GalleryAdminContent() {
                                           className="text-red-600 focus:text-red-600"
                                         >
                                           <Trash2 className="h-4 w-4 mr-2" />
-                                          Delete
+                                          {t('delete')}
                                         </DropdownMenuItem>
                                       </DropdownMenuContent>
                                     </DropdownMenu>
@@ -463,31 +467,31 @@ function GalleryAdminContent() {
                               scope="col"
                               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                             >
-                              Image
+                              {t('image')}
                             </th>
                             <th
                               scope="col"
                               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                             >
-                              Title
+                              {t('title')}
                             </th>
                             <th
                               scope="col"
                               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                             >
-                              Techniques
+                              {t('techniques')}
                             </th>
                             <th
                               scope="col"
                               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                             >
-                              Position
+                              {t('position')}
                             </th>
                             <th
                               scope="col"
                               className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
                             >
-                              Actions
+                              {t('actions')}
                             </th>
                           </tr>
                         </thead>
@@ -553,7 +557,7 @@ function GalleryAdminContent() {
                                           }
                                         >
                                           <Edit className="h-4 w-4 mr-2" />
-                                          Edit
+                                          {t('edit')}
                                         </DropdownMenuItem>
                                         <DropdownMenuItem
                                           onClick={() =>
@@ -562,7 +566,7 @@ function GalleryAdminContent() {
                                           className="text-red-600 focus:text-red-600"
                                         >
                                           <Trash2 className="h-4 w-4 mr-2" />
-                                          Delete
+                                          {t('delete')}
                                         </DropdownMenuItem>
                                       </DropdownMenuContent>
                                     </DropdownMenu>
@@ -600,31 +604,31 @@ function GalleryAdminContent() {
                               scope="col"
                               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                             >
-                              Image
+                              {t('image')}
                             </th>
                             <th
                               scope="col"
                               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                             >
-                              Title
+                              {t('title')}
                             </th>
                             <th
                               scope="col"
                               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                             >
-                              Techniques
+                              {t('techniques')}
                             </th>
                             <th
                               scope="col"
                               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                             >
-                              Position
+                              {t('position')}
                             </th>
                             <th
                               scope="col"
                               className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
                             >
-                              Actions
+                              {t('actions')}
                             </th>
                           </tr>
                         </thead>
@@ -690,7 +694,7 @@ function GalleryAdminContent() {
                                           }
                                         >
                                           <Edit className="h-4 w-4 mr-2" />
-                                          Edit
+                                          {t('edit')}
                                         </DropdownMenuItem>
                                         <DropdownMenuItem
                                           onClick={() =>
@@ -699,7 +703,7 @@ function GalleryAdminContent() {
                                           className="text-red-600 focus:text-red-600"
                                         >
                                           <Trash2 className="h-4 w-4 mr-2" />
-                                          Delete
+                                          {t('delete')}
                                         </DropdownMenuItem>
                                       </DropdownMenuContent>
                                     </DropdownMenu>
@@ -724,10 +728,10 @@ function GalleryAdminContent() {
       <footer className="container mx-auto px-6 py-8 text-center text-[#837e7e]">
         <div className="space-x-6">
           <Link href="/privacy" className="hover:underline">
-            Privacy Policy
+            {t('privacyPolicy')}
           </Link>
           <Link href="/impressum" className="hover:underline">
-            Impressum
+            {t('impressum')}
           </Link>
         </div>
       </footer>

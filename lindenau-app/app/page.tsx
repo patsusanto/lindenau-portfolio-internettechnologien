@@ -1,13 +1,119 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { getAllArtworks, generateSlug } from "@/lib/db";
+import { getAllArtworksClient, generateSlug } from "@/lib/db-client";
+import { useTranslation } from "@/components/translation-provider";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { useEffect, useState } from "react";
+import type { Artwork } from "@/lib/db-client";
 
-export default async function Home() {
-  // Get featured artworks for the homepage (first 3)
-  const allArtworks = await getAllArtworks();
-  const featuredArtworks = [...allArtworks]
-    .sort((a, b) => a.position - b.position)
-    .slice(0, 3);
+export default function Home() {
+  const { t } = useTranslation();
+  const [featuredArtworks, setFeaturedArtworks] = useState<Artwork[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchArtworks = async () => {
+      try {
+        console.log("Home page: Starting to fetch artworks...");
+        const allArtworks = await getAllArtworksClient();
+        console.log("Home page: Received artworks:", allArtworks);
+        
+        const sortedArtworks = [...allArtworks]
+          .sort((a, b) => a.position - b.position)
+          .slice(0, 3);
+        
+        console.log("Home page: Featured artworks:", sortedArtworks);
+        setFeaturedArtworks(sortedArtworks);
+      } catch (error) {
+        console.error("Home page: Error fetching artworks:", error);
+        setError("Failed to load artworks");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchArtworks();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex flex-col bg-[#fffde9]">
+        <header className="container mx-auto px-6 py-8 flex justify-between items-center">
+          <h1 className="text-3xl md:text-4xl font-normal">
+            <Link href="/">Tatjana Lindenau</Link>
+          </h1>
+          <div className="flex items-center gap-4">
+            <nav>
+              <ul className="flex space-x-8">
+                <li>
+                  <Link href="/" className="hover:underline underline">
+                    {t('home')}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/gallery" className="hover:underline">
+                    {t('gallery')}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/about" className="hover:underline">
+                    {t('about')}
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+            <LanguageSwitcher />
+          </div>
+        </header>
+        <main className="container mx-auto px-6 py-8 flex-grow flex justify-center items-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-black"></div>
+        </main>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex flex-col bg-[#fffde9]">
+        <header className="container mx-auto px-6 py-8 flex justify-between items-center">
+          <h1 className="text-3xl md:text-4xl font-normal">
+            <Link href="/">Tatjana Lindenau</Link>
+          </h1>
+          <div className="flex items-center gap-4">
+            <nav>
+              <ul className="flex space-x-8">
+                <li>
+                  <Link href="/" className="hover:underline underline">
+                    {t('home')}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/gallery" className="hover:underline">
+                    {t('gallery')}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/about" className="hover:underline">
+                    {t('about')}
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+            <LanguageSwitcher />
+          </div>
+        </header>
+        <main className="container mx-auto px-6 py-8 flex-grow flex justify-center items-center">
+          <div className="text-center">
+            <p className="text-red-600 mb-4">{error}</p>
+            <p className="text-gray-600">Please check your Supabase configuration.</p>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-[#fffde9]">
@@ -16,25 +122,28 @@ export default async function Home() {
         <h1 className="text-3xl md:text-4xl font-normal">
           <Link href="/">Tatjana Lindenau</Link>
         </h1>
-        <nav>
-          <ul className="flex space-x-8">
-            <li>
-              <Link href="/" className="hover:underline underline">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link href="/gallery" className="hover:underline">
-                Gallery
-              </Link>
-            </li>
-            <li>
-              <Link href="/about" className="hover:underline">
-                About & Contact
-              </Link>
-            </li>
-          </ul>
-        </nav>
+        <div className="flex items-center gap-4">
+          <nav>
+            <ul className="flex space-x-8">
+              <li>
+                <Link href="/" className="hover:underline underline">
+                  {t('home')}
+                </Link>
+              </li>
+              <li>
+                <Link href="/gallery" className="hover:underline">
+                  {t('gallery')}
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:underline">
+                  {t('about')}
+                </Link>
+              </li>
+            </ul>
+          </nav>
+          <LanguageSwitcher />
+        </div>
       </header>
 
       {/* Main Content */}
@@ -85,7 +194,7 @@ export default async function Home() {
             href="/gallery"
             className="bg-black text-white px-8 py-3 inline-block hover:bg-opacity-80 transition-colors"
           >
-            To Gallery
+            {t('toGallery')}
           </Link>
         </div>
       </main>
@@ -94,10 +203,10 @@ export default async function Home() {
       <footer className="container mx-auto px-6 py-8 text-center text-[#837e7e]">
         <div className="space-x-6">
           <Link href="/privacy" className="hover:underline">
-            Privacy Policy
+            {t('privacyPolicy')}
           </Link>
           <Link href="/impressum" className="hover:underline">
-            Impressum
+            {t('impressum')}
           </Link>
         </div>
       </footer>
