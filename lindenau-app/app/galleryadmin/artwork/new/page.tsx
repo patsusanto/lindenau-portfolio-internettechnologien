@@ -144,7 +144,7 @@ function NewArtworkContent() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Left column - Image upload */}
               <div className="space-y-4">
-                <div className="border-2 border-dashed border-gray-300 rounded-md p-6 flex flex-col items-center justify-center h-80">
+                <div className="border-2 border-dashed border-gray-300 rounded-md p-6 flex flex-col items-center justify-center h-80 relative">
                   {previewUrl ? (
                     <div className="relative w-full h-full">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -175,15 +175,15 @@ function NewArtworkContent() {
                       <p className="text-xs text-gray-400">
                         PNG, JPG, WEBP up to 10MB
                       </p>
+                      <input
+                        type="file"
+                        id="artwork-image"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                      />
                     </>
                   )}
-                  <input
-                    type="file"
-                    id="artwork-image"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    className={`absolute inset-0 w-full h-full opacity-0 cursor-pointer ${previewUrl ? "hidden" : ""}`}
-                  />
                 </div>
               </div>
 
@@ -268,7 +268,7 @@ function NewArtworkContent() {
               </Button>
               <Button
                 type="submit"
-                className="bg-black hover:bg-black/80"
+                className="bg-black text-white hover:bg-black/80"
                 disabled={isSubmitting || !imageFile}
               >
                 {isSubmitting ? "Saving..." : "Save Artwork"}

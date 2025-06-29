@@ -405,9 +405,8 @@ function GalleryAdminContent() {
                                     <DropdownMenu>
                                       <DropdownMenuTrigger asChild>
                                         <Button
-                                          variant="ghost"
                                           size="sm"
-                                          className="text-gray-600 hover:text-gray-900"
+                                          className="text-gray-600 hover:text-gray-900 bg-white hover:bg-gray-50 border border-gray-200"
                                         >
                                           <MoreVertical className="h-4 w-4" />
                                         </Button>
@@ -542,9 +541,8 @@ function GalleryAdminContent() {
                                     <DropdownMenu>
                                       <DropdownMenuTrigger asChild>
                                         <Button
-                                          variant="ghost"
                                           size="sm"
-                                          className="text-gray-600 hover:text-gray-900"
+                                          className="text-gray-600 hover:text-gray-900 bg-white hover:bg-gray-50 border border-gray-200"
                                         >
                                           <MoreVertical className="h-4 w-4" />
                                         </Button>
@@ -679,15 +677,14 @@ function GalleryAdminContent() {
                                     <DropdownMenu>
                                       <DropdownMenuTrigger asChild>
                                         <Button
-                                          variant="ghost"
                                           size="sm"
-                                          className="text-gray-600 hover:text-gray-900"
+                                          className="text-gray-600 hover:text-gray-900 bg-white hover:bg-gray-50 border border-gray-200"
                                         >
                                           <MoreVertical className="h-4 w-4" />
                                         </Button>
                                       </DropdownMenuTrigger>
                                       <DropdownMenuContent align="end">
-                                        <DropdownMenuItem
+                                        <DropdownMenuItem className="bg-white hover:bg-gray-50 border border-gray-200"
                                           onClick={() =>
                                             handleEditArtwork(artwork.id)
                                           }
