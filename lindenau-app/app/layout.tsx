@@ -23,9 +23,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <TranslationProvider>
-          <AuthProvider>
-            <ToastProvider>{children}</ToastProvider>
-          </AuthProvider>
+        <AuthProvider>
+          <ToastProvider>{children}</ToastProvider>
+        </AuthProvider>
         </TranslationProvider>
       </body>
     </html>

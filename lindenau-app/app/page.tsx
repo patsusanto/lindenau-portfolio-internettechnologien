@@ -22,8 +22,8 @@ export default function Home() {
         console.log("Home page: Received artworks:", allArtworks);
         
         const sortedArtworks = [...allArtworks]
-          .sort((a, b) => a.position - b.position)
-          .slice(0, 3);
+    .sort((a, b) => a.position - b.position)
+    .slice(0, 3);
         
         console.log("Home page: Featured artworks:", sortedArtworks);
         setFeaturedArtworks(sortedArtworks);
@@ -123,25 +123,25 @@ export default function Home() {
           <Link href="/">Tatjana Lindenau</Link>
         </h1>
         <div className="flex items-center gap-4">
-          <nav>
-            <ul className="flex space-x-8">
-              <li>
-                <Link href="/" className="hover:underline underline">
+        <nav>
+          <ul className="flex space-x-8">
+            <li>
+              <Link href="/" className="hover:underline underline">
                   {t('home')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/gallery" className="hover:underline">
+              </Link>
+            </li>
+            <li>
+              <Link href="/gallery" className="hover:underline">
                   {t('gallery')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:underline">
+              </Link>
+            </li>
+            <li>
+              <Link href="/about" className="hover:underline">
                   {t('about')}
-                </Link>
-              </li>
-            </ul>
-          </nav>
+              </Link>
+            </li>
+          </ul>
+        </nav>
           <LanguageSwitcher />
         </div>
       </header>

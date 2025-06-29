@@ -684,7 +684,7 @@ function GalleryAdminContent() {
                                         </Button>
                                       </DropdownMenuTrigger>
                                       <DropdownMenuContent align="end">
-                                        <DropdownMenuItem className="bg-white hover:bg-gray-50 border border-gray-200"
+                                        <DropdownMenuItem
                                           onClick={() =>
                                             handleEditArtwork(artwork.id)
                                           }

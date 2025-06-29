@@ -17,25 +17,25 @@ export default function About() {
           <Link href="/">Tatjana Lindenau</Link>
         </h1>
         <div className="flex items-center gap-4">
-          <nav>
-            <ul className="flex space-x-8">
-              <li>
-                <Link href="/" className="hover:underline">
+        <nav>
+          <ul className="flex space-x-8">
+            <li>
+              <Link href="/" className="hover:underline">
                   {t('home')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/gallery" className="hover:underline">
+              </Link>
+            </li>
+            <li>
+              <Link href="/gallery" className="hover:underline">
                   {t('gallery')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:underline underline">
+              </Link>
+            </li>
+            <li>
+              <Link href="/about" className="hover:underline underline">
                   {t('about')}
-                </Link>
-              </li>
-            </ul>
-          </nav>
+              </Link>
+            </li>
+          </ul>
+        </nav>
           <LanguageSwitcher />
         </div>
       </header>

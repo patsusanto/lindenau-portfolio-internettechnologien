@@ -7,6 +7,9 @@ import {
   deleteArtwork,
   updateArtworkPositions,
 } from "@/lib/db";
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Add a new artwork
 export async function createArtwork(formData: FormData) {
@@ -143,5 +146,66 @@ export async function updatePositionsAction(
   } catch (error) {
     console.error("Error updating positions:", error);
     return { success: false, message: "Failed to update positions" };
+  }
+}
+
+export async function sendContactEmailAction(formData: {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}) {
+  try {
+    const { name, email, subject, message } = formData;
+
+    // Validate required fields
+    if (!name || !email || !subject || !message) {
+      return {
+        success: false,
+        message: "All fields are required",
+      };
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return {
+        success: false,
+        message: "Please enter a valid email address",
+      };
+    }
+
+    // Compose email content
+    const emailContent = `New Contact Form Submission\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}\n\n---\nThis message was sent from your portfolio contact form.`;
+
+    // Send email using Resend
+    const toEmail = process.env.CONTACT_EMAIL || "your-email@example.com";
+    const fromEmail = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev"; // Use your verified sender
+
+    const data = await resend.emails.send({
+      from: fromEmail,
+      to: toEmail,
+      subject: `Portfolio Contact: ${subject}`,
+      text: emailContent,
+      replyTo: email,
+    });
+
+    if (data.error) {
+      return {
+        success: false,
+        message: data.error.message || "Failed to send message.",
+      };
+    }
+
+    return {
+      success: true,
+      message: "Message sent successfully!",
+    };
+  } catch (error: any) {
+    console.error("Error sending contact email:", error);
+    return {
+      success: false,
+      message: error?.message || "Failed to send message. Please try again.",
+    };
   }
 }
