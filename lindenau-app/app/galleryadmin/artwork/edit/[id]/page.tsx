@@ -355,7 +355,7 @@ function EditArtworkContent({ params }: { params: { id: string } }) {
               </Button>
               <Button
                 type="submit"
-                className="bg-black hover:bg-black/80"
+                className="bg-black text-white hover:bg-black/80"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Saving..." : "Update Artwork"}
