@@ -61,9 +61,6 @@ export interface Translations {
   yourEmail: string;
   subjectOfMessage: string;
   yourMessage: string;
-  messageSentSuccessfully: string;
-  failedToSendMessage: string;
-  sending: string;
   
   // Footer
   privacyPolicy: string;
@@ -137,9 +134,6 @@ const translations: Record<Language, Translations> = {
     yourEmail: 'your.email@example.com',
     subjectOfMessage: 'Subject of your message',
     yourMessage: 'Your message...',
-    messageSentSuccessfully: 'Message sent successfully',
-    failedToSendMessage: 'Failed to send message',
-    sending: 'Sending...',
     
     // Footer
     privacyPolicy: 'Privacy Policy',
@@ -211,9 +205,6 @@ const translations: Record<Language, Translations> = {
     yourEmail: 'ihre.email@beispiel.com',
     subjectOfMessage: 'Betreff Ihrer Nachricht',
     yourMessage: 'Ihre Nachricht...',
-    messageSentSuccessfully: 'Nachricht erfolgreich gesendet',
-    failedToSendMessage: 'Fehler beim Senden der Nachricht',
-    sending: 'Nachricht wird gesendet...',
     
     // Footer
     privacyPolicy: 'Datenschutz',
